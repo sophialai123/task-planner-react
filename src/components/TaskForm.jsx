@@ -1,42 +1,47 @@
-import React, { useState } from "react";
-import Task from "./Task";
-
-export default function TaskForm() {
+import { useState } from "react";
 
 
-  const [value, setValue] = useState({
-    name: "Task Name",
-    description: "Task Description",
-    assigned: "assigned",
-    date: "Today"
+export default function TaskForm({ addTask }) {
+  const [inputValue, setInputValue] = useState({
+    name: " ",
+    description: " ",
+    assigned: " ",
+    date: " "
   });
 
-  const handleSubmit = (e) => {
 
-    console.log(e)
+  function handleSubmit() {
 
-
+    addTask(inputValue)
 
   }
 
+  const handleFormChange = event => {
+
+    const propChanging = event.target.id; //object key
+    const valueChanging = event.target.value;
+
+    setInputValue({
+      ...inputValue,
+      [propChanging]: valueChanging   //object acess the key
+    })
+  }
+
+
   return (
-    <div>
-
-      <label>Task Name</label>
-      <input type='text' /> <br />
-
-      <label>Task Description</label>
-      <input type='text' /><br />
-
-      <label>Task Assigned</label>
-      <input type='text' /><br />
-      <label>Task Due Date</label>
-      <input type='text' /><br />
-
+    <div className="form">
+      <h1>Task Planner</h1>
+      <label>Task Name: </label>
+      <input id="name" type='text' value={inputValue.name} onChange={handleFormChange} /> <br />
+      <label>Task Description: </label>
+      <input id="description" type='text' value={inputValue.description} onChange={handleFormChange} /><br />
+      <label>Task Assigned: </label>
+      <input id="assigned" type='text' value={inputValue.assigned} onChange={handleFormChange} /><br />
+      <label>Task Due Date: </label>
+      <input id="date" type='date' value={inputValue.date} onChange={handleFormChange} /><br />
       <button onClick={handleSubmit}>
         Submit
       </button>
-
     </div>
   )
 
